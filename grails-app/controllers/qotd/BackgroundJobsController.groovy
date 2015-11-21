@@ -1,18 +1,20 @@
 package qotd
 
 import backgroundjob.BackgroundJob
+import backgroundjob.BackgroundJobState;
 import backgroundjob.StupidBackgroundJob
+
 import javax.annotation.PreDestroy
 
 import org.springframework.web.bind.annotation.PathVariable;
 
 class BackgroundJobsController {
-    private List<BackgroundJob> jobs = new ArrayList<BackgroundJob>()
-    private static int limit = 10
 
+    def backgroundJobsService
+    
     def index() {
         def rendered = '<h1>List of jobs</h1><ul>'
-        jobs.eachWithIndex { it, idx ->
+        backgroundJobsService.getJobs().eachWithIndex { it, idx ->
             rendered += "<li>Job #${idx}: ${it.jobState} - completed: ${it.progress()}%</li>"
         }
         rendered += "</ul>"
@@ -20,34 +22,32 @@ class BackgroundJobsController {
     }
 
     def create() {
-      jobs << new StupidBackgroundJob()
-      render text: '<h1>Job created</h1>'
+        try {
+            backgroundJobsService.create()
+            render text: 'Job created'
+        } catch (MaxBackgroundJobsReachedException e) {
+            render status: 500, text: 'Max number of jobs reached'
+        }
     }
 
     def start(@PathVariable("id") int id) {
-        println "start() called with indice: ${id}"
-        def selJob = jobs[id]
-        if (! selJob) {
+        try {
+            backgroundJobsService.start(id)
+            render(text: "Job #${id} started")            
+        } catch (NoSuchBackgroundJobException e) {
             render(status: 404, text: 'job not found')
-            return
+        } catch (InvalidStateBackgroundJobException e) {
+            render(status: 400, text: "Invalid job state ${selJob.jobState} for job #${id}")
         }
-        if (selJob.jobState == BackgroundJobState.NOT_STARTED) {
-            selJob.start()
-            render(text: "Job #${id} started")
-        } else {
-            render(status: 400, text: "invalid job state: ${selJob.jobState}")
-        }
-        return
     }
 
     def progress(@PathVariable("id") int id) {
-        def selJob = jobs[id]
-        if (! selJob) {
-            render(status: 404, text: 'job not found')
-        } else {
+        try {
+            def progress = backgroundJobsService.progress(id)
             render (text: "Job progress (percent): ${selJob.progress()}")
+        } catch (NoSuchBackgroundJobException e) {
+            render(status: 404, text: 'job not found')
         }
-        return
     }
     
     @PreDestroy
