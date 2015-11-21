@@ -2,8 +2,9 @@ package qotd
 
 import java.util.List
 
+import javax.annotation.PreDestroy
 import backgroundjob.BackgroundJob
-import backgroundjob.BackgroundJobState;
+import backgroundjob.BackgroundJobState
 import backgroundjob.StupidBackgroundJob
 
 class NoSuchBackgroundJobException extends RuntimeException {
@@ -21,14 +22,19 @@ class InvalidStateBackgroundJobException extends RuntimeException {
 
 class BackgroundJobsService {
     private List<BackgroundJob> jobs = new ArrayList<BackgroundJob>()
+    /**
+     * Maximum limit of running jobs simultaneously
+     */
     private static int limit = 10
 
     public List<BackgroundJob> getJobs() {
         return jobs
     }
-    
+
     public BackgroundJob create() throws RuntimeException {
-        if (jobs.size() >= limit) {
+        int runningJobs = jobs.findAll { it.jobState == BackgroundJobState.RUNNING }.size()
+        
+        if (runningJobs >= limit) {
             throw new MaxBackgroundJobsReachedException()
         }
         def ret = new StupidBackgroundJob()
@@ -56,5 +62,12 @@ class BackgroundJobsService {
     public int progress(int id) throws RuntimeException {
         def selJob = getJob(id)
         return selJob.progress()
+    }
+
+    @PreDestroy
+    def shutdown() {
+        jobs.each {
+            it.join(100)
+        }
     }
 }
