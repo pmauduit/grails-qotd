@@ -6,6 +6,10 @@ class StupidBackgroundJob extends BackgroundJob {
     private int count = 0
     private int delay = new Random().nextInt(100) + 50
 
+    public StupidBackgroundJob(int id) {
+        identifier = id
+    }
+    
     @Override
     public void run() {
         jobState = BackgroundJobState.RUNNING

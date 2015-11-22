@@ -10,3 +10,5 @@ build/
 .settings
 .classpath
 /bin/
+grails-app/assets/javascripts/bootstrap*
+grails-app/assets/stylesheets/bootstrap*

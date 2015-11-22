@@ -9,10 +9,11 @@ enum BackgroundJobState {
 abstract class BackgroundJob extends Thread {
     protected BackgroundJobState jobState = BackgroundJobState.NOT_STARTED
     public abstract int progress()
-    
+    protected int identifier
+
     public toJSON() {
         JSONObject ret = new JSONObject()
-        ret << [jobState : jobState, progress : progress() ]
+        ret << [jobState : jobState, progress : progress(), identifier: identifier ]
         return ret
     }
 }

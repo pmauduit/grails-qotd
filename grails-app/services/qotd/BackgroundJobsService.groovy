@@ -37,7 +37,7 @@ class BackgroundJobsService {
         if (runningJobs >= limit) {
             throw new MaxBackgroundJobsReachedException()
         }
-        def ret = new StupidBackgroundJob()
+        def ret = new StupidBackgroundJob(jobs.size())
         jobs << ret
         return ret
     }
