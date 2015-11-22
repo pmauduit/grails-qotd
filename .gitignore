@@ -12,3 +12,6 @@ build/
 /bin/
 grails-app/assets/javascripts/bootstrap*
 grails-app/assets/stylesheets/bootstrap*
+.asscache
+gradlew
+gradlew.bat
