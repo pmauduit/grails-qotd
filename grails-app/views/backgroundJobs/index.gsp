@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
     <head>
+        <r:require modules="bootstrap"/>
         <title>List of jobs</title>
     </head>
     <body>
