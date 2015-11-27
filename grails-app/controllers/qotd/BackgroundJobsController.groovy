@@ -14,18 +14,20 @@ class BackgroundJobsController {
 
     def backgroundJobsService
     
-    def index(@PathVariable("format") String format) {
-        if (format == "json") {
-            def ret = new JSONArray()
-            backgroundJobsService.getJobs().each {
-                ret  << it.toJSON()
-            }
-            render text: ret.toString(), contentType: "application/json", encoding: "UTF-8"
-            return
-        }
+    def index() {
         [jobs : backgroundJobsService.getJobs()]
     }
-
+ 
+    def get() {
+        def ret = new JSONArray()
+        backgroundJobsService.getJobs().each {
+            ret  << it.toJSON()
+        }
+        
+        render text: new JSONObject().put('jobs', ret).toString(),
+            contentType: "application/json", encoding: "UTF-8"
+    }
+ 
     def create() {
         try {
             backgroundJobsService.create()
