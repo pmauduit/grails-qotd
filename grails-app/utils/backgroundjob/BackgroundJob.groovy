@@ -10,10 +10,11 @@ abstract class BackgroundJob extends Thread {
     protected BackgroundJobState jobState = BackgroundJobState.NOT_STARTED
     public abstract int progress()
     protected int identifier
+    protected String jobName
 
     public toJSON() {
         JSONObject ret = new JSONObject()
-        ret << [jobState : jobState, progress : progress(), identifier: identifier ]
+        ret << [jobState : jobState, progress : progress(), identifier: identifier, jobName: jobName ]
         return ret
     }
 }

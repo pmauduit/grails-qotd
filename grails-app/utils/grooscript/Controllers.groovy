@@ -9,10 +9,12 @@ class Controllers {
     }
     def init() {
         def controllers = angular.module('myAppControllers', ['myAppServices'])
-        controllers.controller('BackgroundJobCtrl', { $scope, BackgroundJobService ->
+        controllers.controller('BackgroundJobCtrl', { $scope, $interval, BackgroundJobService ->
+            $interval({
+                $scope.backgroundJobs = BackgroundJobService.get()
+            }, 5000)
             $scope.backgroundJobs = BackgroundJobService.get()
         })
     }
     
-
 }

@@ -8,6 +8,7 @@ class StupidBackgroundJob extends BackgroundJob {
 
     public StupidBackgroundJob(int id) {
         identifier = id
+        jobName = this.getClass().getName()
     }
     
     @Override

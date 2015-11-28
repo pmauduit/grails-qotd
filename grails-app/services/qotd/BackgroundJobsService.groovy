@@ -25,7 +25,7 @@ class BackgroundJobsService {
     /**
      * Maximum limit of running jobs simultaneously
      */
-    private static int limit = 10
+    private static int limit = 5
 
     public List<BackgroundJob> getJobs() {
         return jobs

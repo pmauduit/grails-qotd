@@ -16,13 +16,13 @@
         <asset:javascript src="app/Application.js" />
     </head>
     <body>
-      <div class="container" ng-controller="BackgroundJobCtrl">
+      <div class="container" ng-controller="BackgroundJobCtrl" ng-cloak>
         <div class="row">
           <div class="col-md-6">
             <h1>Jobs listing</h1>
             <ul class="list-group" ng-repeat="j in backgroundJobs.jobs">
 			  <li ng-if="j.jobState == 'NOT_STARTED'" class="list-group-item list-group-item-warning">
-			  	Job #{{j.identifier}}
+			  	Job #{{j.identifier}} - {{j.jobName}}
 					<div class="progress">
                       <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0"
                         aria-valuemin="0" aria-valuemax="100" style="width: 0%">
@@ -31,7 +31,7 @@
                     </div>
 			  </li>
 			  <li ng-if="j.jobState == 'RUNNING'" class="list-group-item list-group-item-info">
-			  	Job #{{j.identifier}}
+			  	Job #{{j.identifier}} - {{j.jobName}}
                     <div class="progress">
                       <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{j.progress}}"
                         aria-valuemin="0" aria-valuemax="100" style="width: {{j.progress}}%">
@@ -40,7 +40,7 @@
                     </div>
 			  </li>
 			  <li ng-if="j.jobState == 'FINISHED'" class="list-group-item list-group-item-success">
-			  	Job #{{j.identifier}}
+			  	Job #{{j.identifier}} - {{j.jobName}}
                     <div class="progress">
                       <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
                         aria-valuemin="0" aria-valuemax="100" style="width: 100%">
