@@ -1,11 +1,10 @@
-<!doctype html>
 <html ng-app="myApp">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <asset:stylesheet src="bootstrap-all.css"/>
-        <asset:stylesheet src="font-awesome-all.css"/>
+        <asset:stylesheet src="font-awesome.min.css"/>
         <asset:javascript src="grooscript/grooscript.min.js" />
         <asset:javascript src="grooscript/grooscript-tools.js" />
         <asset:javascript src="angular/angular.min.js" />
@@ -20,8 +19,8 @@
         <div class="row">
           <div class="col-md-6">
             <h1>Jobs listing</h1>
-            <ul class="list-group" ng-repeat="j in backgroundJobs.jobs">
-			  <li ng-if="j.jobState == 'NOT_STARTED'" class="list-group-item list-group-item-warning">
+            <ul class="list-group">
+			  <li ng-repeat="j in backgroundJobs.jobs" ng-if="j.jobState == 'NOT_STARTED'" class="list-group-item list-group-item-warning">
 			  	Job #{{j.identifier}} - {{j.jobName}}
 					<div class="progress">
                       <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0"
@@ -29,8 +28,13 @@
                         0%
                       </div>
                     </div>
+                    <div>
+	                    <button class="btn btn-default" ng-click="start(j)">
+	                    	<span class="badge fa fa-play" />
+	                    </button>
+                    </div>
 			  </li>
-			  <li ng-if="j.jobState == 'RUNNING'" class="list-group-item list-group-item-info">
+			  <li ng-repeat="j in backgroundJobs.jobs" ng-if="j.jobState == 'RUNNING'" class="list-group-item list-group-item-info">
 			  	Job #{{j.identifier}} - {{j.jobName}}
                     <div class="progress">
                       <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{j.progress}}"
@@ -39,7 +43,7 @@
                       </div>
                     </div>
 			  </li>
-			  <li ng-if="j.jobState == 'FINISHED'" class="list-group-item list-group-item-success">
+			  <li ng-repeat="j in backgroundJobs.jobs" ng-if="j.jobState == 'FINISHED'" class="list-group-item list-group-item-success">
 			  	Job #{{j.identifier}} - {{j.jobName}}
                     <div class="progress">
                       <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
@@ -47,9 +51,24 @@
                         100%
                       </div>
                     </div>
+                    <div>
+	                    <button class="btn btn-default" ng-click="remove(j)">
+	                    	<span class="badge fa fa-eject" />
+	                    </button>
+	                    <button class="btn btn-default">
+	                    	<span class="badge fa fa-file-text-o" />
+	                    </button>
+	                    
+                    </div>
 			  </li>
             </ul>
           </div>
+        </div>
+		<div class="col-md-6">
+        	<h1>Create a new job</h1>
+                <button class="btn btn-default" ng-click="create()">
+                	<span class="badge fa fa-plus" />
+                </button>        	
         </div>
       </div>
         <script type="text/javascript">

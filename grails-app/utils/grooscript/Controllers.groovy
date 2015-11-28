@@ -9,11 +9,32 @@ class Controllers {
     }
     def init() {
         def controllers = angular.module('myAppControllers', ['myAppServices'])
-        controllers.controller('BackgroundJobCtrl', { $scope, $interval, BackgroundJobService ->
+        controllers.controller('BackgroundJobCtrl', { $scope, $interval, $http, BackgroundJobService ->
             $interval({
                 $scope.backgroundJobs = BackgroundJobService.get()
             }, 5000)
-            $scope.backgroundJobs = BackgroundJobService.get()
+
+            $scope.refresh = {
+                $scope.backgroundJobs = BackgroundJobService.get()
+            }
+            
+            $scope.start = { job ->
+                $http.get("/backgroundJobs/start/${job.identifier}").success({ data ->
+                    $scope.refresh()
+                })
+            }
+
+            $scope.remove = { job ->
+                $http.get("/backgroundJobs/remove/${job.identifier}").success({ data ->
+                    $scope.refresh()
+                })
+            }
+            $scope.create = {
+                $http.get("/backgroundJobs/create").success({ data ->
+                    $scope.refresh()
+                })
+            }
+            $scope.refresh()
         })
     }
     

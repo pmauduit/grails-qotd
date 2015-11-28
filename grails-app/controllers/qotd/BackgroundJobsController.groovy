@@ -45,7 +45,18 @@ class BackgroundJobsController {
         } catch (NoSuchBackgroundJobException e) {
             render status: 404, text: 'job not found'
         } catch (InvalidStateBackgroundJobException e) {
-            render status: 500, text: "Invalid job state"
+            render status: 400, text: "Invalid job state"
+        }
+    }
+    def remove(@PathVariable("id") int id) {
+        def job = null
+        try {
+            backgroundJobsService.remove(id)
+            render text: "Job #${id} removed"
+        } catch (NoSuchBackgroundJobException e) {
+            render status: 404, text: 'job not found'
+        } catch (InvalidStateBackgroundJobException e) {
+            render status: 400, text: "Invalid job state"
         }
     }
 
