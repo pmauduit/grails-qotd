@@ -19,18 +19,18 @@ class Controllers {
             }
             
             $scope.start = { job ->
-                $http.get("/backgroundJobs/start/${job.identifier}").success({ data ->
+                $http.get("start/${job.identifier}").success({ data ->
                     $scope.refresh()
                 })
             }
 
             $scope.remove = { job ->
-                $http.get("/backgroundJobs/remove/${job.identifier}").success({ data ->
+                $http.get("remove/${job.identifier}").success({ data ->
                     $scope.refresh()
                 })
             }
             $scope.create = {
-                $http.get("/backgroundJobs/create").success({ data ->
+                $http.get("create").success({ data ->
                     $scope.refresh()
                 })
             }

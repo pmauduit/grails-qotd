@@ -11,7 +11,7 @@ class Services {
         def service = angular.module('myAppServices', ['ngResource'])
         
         service.factory('BackgroundJobService', { $resource -> 
-            $resource('/backgroundJobs/get')
+            $resource('get')
         })
     }
 }

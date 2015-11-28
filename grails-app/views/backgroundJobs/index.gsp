@@ -5,14 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <asset:stylesheet src="bootstrap-all.css"/>
         <asset:stylesheet src="font-awesome.min.css"/>
-        <asset:javascript src="grooscript/grooscript.min.js" />
-        <asset:javascript src="grooscript/grooscript-tools.js" />
-        <asset:javascript src="app/Services.js" />
-        <asset:javascript src="app/Controllers.js" />
-        <asset:javascript src="app/Application.js" />
         <script type="text/javascript" src="${resource()}/js/angular/angular.min.js"></script>
         <script type="text/javascript" src="${resource()}/js/angular/angular-resource.min.js"></script>
         <script type="text/javascript" src="${resource()}/js/angular/angular-route.min.js"></script>
+        <asset:javascript src="grooscript/grooscript.min.js" />
+        <asset:javascript src="grooscript/grooscript-tools.js" />
+        <script type="text/javascript" src="${resource()}/js/app/Services.js"></script>
+        <script type="text/javascript" src="${resource()}/js/app/Controllers.js"></script>
+        <script type="text/javascript" src="${resource()}/js/app/Application.js"></script>
     </head>
     <body>
       <div class="container" ng-controller="BackgroundJobCtrl" ng-cloak>

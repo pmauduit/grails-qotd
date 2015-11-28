@@ -83,15 +83,15 @@ dependencies {
 
 grooscript {
     source = ['grails-app/utils/grooscript/']
-    destination = 'grails-app/assets/javascripts/app/'
+    destination = 'src/main/webapp/js/app/'
     recursive = true
     includeDependencies = true
 }
 
-compileGroovy.dependsOn convert
+assetCompile.dependsOn convert
 
 task cleanGrooScript(type: Delete) {
-  delete "grails-app/assets/javascripts/app"
+  delete "src/main/webapp/js/app/"
 }
 
 clean.dependsOn cleanGrooScript
