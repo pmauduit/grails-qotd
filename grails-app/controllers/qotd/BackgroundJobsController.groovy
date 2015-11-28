@@ -8,6 +8,7 @@ import javax.annotation.PreDestroy
 
 import org.grails.web.json.JSONObject
 import org.grails.web.json.JSONArray
+import org.reflections.Reflections;
 import org.springframework.web.bind.annotation.PathVariable
 
 class BackgroundJobsController {
@@ -25,6 +26,16 @@ class BackgroundJobsController {
         }
     }
  
+    def availableJobTypes() {
+        def ret = new JSONObject()
+        def arr = new JSONArray()
+        new Reflections('backgroundjob').getSubTypesOf(BackgroundJob).each {
+            arr << it.name
+        }
+        ret.put("availableJobTypes", arr)
+        render text: ret.toString(), contentType: "application/json", encoding: "UTF-8"
+    }
+
     def get() {
         def ret = new JSONArray()
         backgroundJobsService.getJobs().each {
