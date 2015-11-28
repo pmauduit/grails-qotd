@@ -15,4 +15,4 @@ grails-app/assets/stylesheets/bootstrap*
 .asscache
 gradlew
 gradlew.bat
-grails-app/assets/javascripts/app/
+src/main/webapp/js/app/
