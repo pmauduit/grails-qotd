@@ -55,9 +55,11 @@
 	                    <button class="btn btn-default" ng-click="remove(j)">
 	                    	<span class="badge fa fa-eject" />
 	                    </button>
+	                    <a href="report/{{j.identifier}}"
 	                    <button class="btn btn-default">
 	                    	<span class="badge fa fa-file-text-o" />
 	                    </button>
+	                    </a>
 	                    
                     </div>
 			  </li>

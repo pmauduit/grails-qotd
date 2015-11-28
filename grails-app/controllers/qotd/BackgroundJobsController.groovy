@@ -17,6 +17,13 @@ class BackgroundJobsController {
     def index() {
         [jobs : backgroundJobsService.getJobs()]
     }
+    def report(@PathVariable("id") int id) {
+        try {
+            [job: backgroundJobsService.findJob(id)]
+        } catch (NoSuchBackgroundJobException e) {
+            render status: 404, text: 'job not found'
+        }
+    }
  
     def get() {
         def ret = new JSONArray()

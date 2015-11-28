@@ -11,10 +11,19 @@ abstract class BackgroundJob extends Thread {
     public abstract int progress()
     protected int identifier
     protected String jobName
+    protected Date startDate
+    protected Date endDate
+    protected JSONObject report = new JSONObject()
 
     public toJSON() {
         JSONObject ret = new JSONObject()
-        ret << [jobState : jobState, progress : progress(), identifier: identifier, jobName: jobName ]
+        ret << [ jobState:   jobState,
+                 progress:   progress(),
+                 identifier: identifier,
+                 jobName:    jobName,
+                 startDate:  startDate ? startDate.getTime() : null,
+                 endDate:    endDate ? endDate.getTime() : null,
+                 report:     report ]
         return ret
     }
 }
