@@ -88,6 +88,14 @@ grooscript {
     includeDependencies = true
 }
 
+compileGroovy.dependsOn convert
+
+task cleanGrooScript(type: Delete) {
+  delete "grails-app/assets/javascripts/app"
+}
+
+clean.dependsOn cleanGrooScript
+
 task wrapper(type: Wrapper) {
     gradleVersion = gradleWrapperVersion
 }
